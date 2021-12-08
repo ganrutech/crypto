@@ -1,7 +1,7 @@
 const axios = require("axios").default;
 const data = require("../data/stocks.json");
 
-const { percentageChange } = require("../handlers/changes");
+const { percentageChange, checkLowStock } = require("../handlers/changes");
 
 const apiURL = "https://api.wazirx.com/api/v2/tickers";
 
@@ -23,7 +23,8 @@ const fetchStocks = async (req, res) => {
 
 const debugStocks = async (req, res) => {
   const result = await percentageChange(Object.values(data));
-  res.json(result);
+  const lowStocks = await checkLowStock(result);
+  res.json(lowStocks);
 };
 
 module.exports = {

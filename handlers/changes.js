@@ -1,13 +1,20 @@
-const percentageChange = async (data) => {
-  const result = await new Promise((resolve) => {
-    let filterData = data.filter((item) => item.quote_unit === "inr");
-
+const percentageChange = (data) => {
+  return new Promise((resolve) => {
+    const filterData = data.filter((item) => item.quote_unit === "inr");
     resolve(filterData);
   });
+};
 
-  return result;
+const checkLowStock = (data) => {
+  return new Promise((resolve) => {
+    const filterData = data.filter(
+      (item) => item.high <= item.last && item.last !== "0.0"
+    );
+    resolve(filterData);
+  });
 };
 
 module.exports = {
   percentageChange,
+  checkLowStock,
 };
